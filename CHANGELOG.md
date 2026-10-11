@@ -5,11 +5,6 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y
 
 ## [Sin publicar]
 
-### Cambiado
-
-- "Abrir en Canvas", el widget y los avisos abren la tarea en la app Canvas Student si está instalada, que
-  ya tiene la sesión iniciada. Sin ella, se usa el navegador como antes.
-
 ## [0.1.0]
 
 ### Agregado
@@ -24,5 +19,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y
   notificaciones de Canvas.
 - Widget de pantalla de inicio con lo atrasado, lo de hoy y lo de mañana.
 - Notas personales: se crean y eliminan desde la app y se guardan en el planner de Canvas.
+- "Abrir en Canvas", el widget y los avisos abren la tarea en Canvas Student si está instalada (ya tiene la
+  sesión iniciada); si no, en el navegador.
 - Token cifrado con una clave del Android Keystore.
 - Interfaz en español e inglés, colores del sistema (Material You).
