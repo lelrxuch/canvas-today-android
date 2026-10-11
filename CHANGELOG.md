@@ -9,6 +9,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y
 
 ### Agregado
 
+- Pestañas Inicio, Tareas y Notas en la barra inferior, como en Canvas Today de escritorio. Inicio muestra
+  lo atrasado, lo de hoy y lo de mañana, con un enlace al resto de tareas.
 - Lista de pendientes del planner de Canvas agrupada en Atrasadas, Hoy, Mañana, Esta semana y Más adelante,
   con las mismas reglas que Canvas Today de escritorio.
 - Caché local: la lista y el widget se muestran al instante y se actualizan por detrás.

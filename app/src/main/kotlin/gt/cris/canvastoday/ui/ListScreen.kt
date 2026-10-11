@@ -16,7 +16,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
@@ -28,6 +31,8 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -62,6 +67,11 @@ import java.time.ZonedDateTime
 
 private const val MINUTE_MS = 60_000L
 
+/** Inicio: lo urgente (tareas y notas). Tareas: solo Canvas. Notas: solo notas personales. */
+enum class Tab { HOME, TASKS, NOTES }
+
+private val HOME_GROUPS = setOf(Planner.Group.OVERDUE, Planner.Group.TODAY, Planner.Group.TOMORROW)
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(
@@ -78,6 +88,7 @@ fun ListScreen(
     var expandedId by rememberSaveable { mutableStateOf<String?>(null) }
     var showNoteDialog by rememberSaveable { mutableStateOf(false) }
     var toDelete by remember { mutableStateOf<PlannerItem?>(null) }
+    var tab by rememberSaveable { mutableStateOf(Tab.HOME) }
 
     // Las etiquetas relativas ("En 20 min") se recalculan cada minuto sin pedir datos.
     var now by remember { mutableStateOf(ZonedDateTime.now()) }
@@ -91,7 +102,16 @@ fun ListScreen(
 
     // No se llama "items" para no chocar con LazyListScope.items.
     val all = state.snapshot.items
-    val groups = Planner.grouped(all, now)
+    val tasks = all.filter { !it.isNote }
+    val notes = all.filter { it.isNote }
+    val shown = when (tab) {
+        Tab.HOME -> all.filter { Planner.groupOf(it.due, now) in HOME_GROUPS }
+        Tab.TASKS -> tasks
+        Tab.NOTES -> notes
+    }
+    val groups = Planner.grouped(shown, now)
+    // El enlace de Inicio lleva a Tareas: solo cuenta tareas que no se ven ahí.
+    val moreTasks = if (tab == Tab.HOME) tasks.count { it !in shown } else 0
     val courses = all.filter { !it.isNote && it.courseId != null && it.course != null }
         .associate { it.courseId!! to it.course!! }
         .toList()
@@ -123,6 +143,28 @@ fun ListScreen(
             )
         },
         snackbarHost = { SnackbarHost(snackbar) },
+        bottomBar = {
+            NavigationBar {
+                NavigationBarItem(
+                    selected = tab == Tab.HOME,
+                    onClick = { tab = Tab.HOME },
+                    icon = { Icon(Icons.Filled.Home, null) },
+                    label = { Text(stringResource(R.string.tab_home)) },
+                )
+                NavigationBarItem(
+                    selected = tab == Tab.TASKS,
+                    onClick = { tab = Tab.TASKS },
+                    icon = { Icon(Icons.AutoMirrored.Filled.List, null) },
+                    label = { Text(stringResource(R.string.tab_tasks, tasks.size)) },
+                )
+                NavigationBarItem(
+                    selected = tab == Tab.NOTES,
+                    onClick = { tab = Tab.NOTES },
+                    icon = { Icon(Icons.Filled.Edit, null) },
+                    label = { Text(stringResource(R.string.tab_notes, notes.size)) },
+                )
+            }
+        },
     ) { padding ->
         PullToRefreshBox(
             isRefreshing = state.refreshing,
@@ -133,7 +175,14 @@ fun ListScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 96.dp),
             ) {
-                item(key = "summary") { Summary(all, groups) }
+                item(key = "summary") {
+                    when (tab) {
+                        // Inicio resume todo; Tareas, solo las tareas.
+                        Tab.HOME -> Summary(all, Planner.grouped(all, now))
+                        Tab.TASKS -> Summary(tasks, groups)
+                        Tab.NOTES -> NotesSummary(notes.size)
+                    }
+                }
 
                 state.snapshot.error?.let { kind ->
                     item(key = "error") {
@@ -151,8 +200,8 @@ fun ListScreen(
                     }
                 }
 
-                if (all.isEmpty() && state.snapshot.fetchedAt != null && state.snapshot.error == null) {
-                    item(key = "empty") { Empty(state.daysAhead) }
+                if (shown.isEmpty() && state.snapshot.fetchedAt != null && state.snapshot.error == null) {
+                    item(key = "empty-${tab.name}") { Empty(tab, state.daysAhead) }
                 }
 
                 for ((group, list) in groups) {
@@ -166,6 +215,14 @@ fun ListScreen(
                             onOpen = onOpen,
                             onDelete = { toDelete = item },
                         )
+                    }
+                }
+
+                if (moreTasks > 0) {
+                    item(key = "more") {
+                        TextButton(onClick = { tab = Tab.TASKS }, modifier = Modifier.padding(top = 4.dp)) {
+                            Text(stringResource(R.string.home_more, moreTasks))
+                        }
                     }
                 }
 
@@ -242,11 +299,26 @@ private fun Summary(items: List<PlannerItem>, groups: List<Pair<Planner.Group, L
 }
 
 @Composable
-private fun Empty(days: Int) {
+private fun NotesSummary(count: Int) {
+    Text(
+        if (count == 1) stringResource(R.string.notes_count_one) else stringResource(R.string.notes_count, count),
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(top = 4.dp, bottom = 8.dp),
+    )
+}
+
+@Composable
+private fun Empty(tab: Tab, days: Int) {
+    val (title, body) = when (tab) {
+        Tab.HOME -> stringResource(R.string.home_empty_title) to stringResource(R.string.home_empty_body)
+        Tab.TASKS -> stringResource(R.string.empty_title) to stringResource(R.string.empty_body, days)
+        Tab.NOTES -> stringResource(R.string.notes_empty_title) to stringResource(R.string.notes_empty_body)
+    }
     Column(Modifier.fillMaxWidth().padding(vertical = 48.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(stringResource(R.string.empty_title), style = MaterialTheme.typography.titleMedium)
+        Text(title, style = MaterialTheme.typography.titleMedium)
         Text(
-            stringResource(R.string.empty_body, days),
+            body,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

@@ -95,4 +95,14 @@
     <string name="widget_title">Today and tomorrow</string>
     <string name="widget_empty">Nothing due</string>
     <string name="widget_setup">Open the app to connect Canvas</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_tasks">Tasks (%1$d)</string>
+    <string name="tab_notes">Notes (%1$d)</string>
+    <string name="home_empty_title">Nothing urgent</string>
+    <string name="home_empty_body">Nothing overdue, due today or due tomorrow.</string>
+    <string name="home_more">%1$d more in Tasks</string>
+    <string name="notes_empty_title">No notes</string>
+    <string name="notes_empty_body">Create one with the Note button.</string>
+    <string name="notes_count_one">1 note</string>
+    <string name="notes_count">%1$d notes</string>
 </resources>
