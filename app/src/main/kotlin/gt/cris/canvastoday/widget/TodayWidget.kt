@@ -2,7 +2,6 @@ package gt.cris.canvastoday.widget
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +33,7 @@ import gt.cris.canvastoday.core.Planner
 import gt.cris.canvastoday.core.PlannerItem
 import gt.cris.canvastoday.data.Cache
 import gt.cris.canvastoday.data.Repository
+import gt.cris.canvastoday.ui.CanvasLinks
 import gt.cris.canvastoday.ui.Labels
 import gt.cris.canvastoday.ui.MainActivity
 import java.time.ZonedDateTime
@@ -107,7 +107,7 @@ private fun Hint(text: String, onClick: androidx.glance.action.Action) {
 private fun WidgetRow(context: Context, item: PlannerItem, now: ZonedDateTime) {
     val label = Planner.dueLabel(item.due, now)
     val action = actionStartActivity(
-        item.url?.let { Intent(Intent.ACTION_VIEW, Uri.parse(it)) } ?: Intent(context, MainActivity::class.java),
+        item.url?.let { CanvasLinks.intentFor(context, it) } ?: Intent(context, MainActivity::class.java),
     )
     Column(modifier = GlanceModifier.fillMaxWidth().padding(vertical = 5.dp).clickable(action)) {
         Row(modifier = GlanceModifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {

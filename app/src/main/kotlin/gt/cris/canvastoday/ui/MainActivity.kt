@@ -1,9 +1,7 @@
 package gt.cris.canvastoday.ui
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -44,7 +42,7 @@ class MainActivity : ComponentActivity() {
 
     private fun openUrl(url: String) {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            startActivity(CanvasLinks.intentFor(this, url))
         } catch (_: android.content.ActivityNotFoundException) {
             // Sin navegador ni app de Canvas: no hay nada que abrir.
         }

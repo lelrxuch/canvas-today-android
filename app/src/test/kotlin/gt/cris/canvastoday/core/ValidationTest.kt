@@ -30,6 +30,20 @@ class ValidationTest {
     }
 
     @Test
+    fun convertsWebLinksToCanvasStudentLinks() {
+        assertEquals(
+            "canvas-courses://miumg.instructure.com/courses/210357/assignments/42",
+            toCanvasAppUri("https://miumg.instructure.com/courses/210357/assignments/42"),
+        )
+        assertEquals(
+            "canvas-courses://miumg.instructure.com/courses/1/discussion_topics/9?module_item_id=3",
+            toCanvasAppUri("https://miumg.instructure.com/courses/1/discussion_topics/9?module_item_id=3"),
+        )
+        assertNull(toCanvasAppUri("http://miumg.instructure.com/courses/1"))
+        assertNull(toCanvasAppUri("javascript:alert(1)"))
+    }
+
+    @Test
     fun checksTokenFormat() {
         assertTrue(isTokenFormat("1234~AbCdEf123"))
         assertFalse(isTokenFormat("AbCdEf"))

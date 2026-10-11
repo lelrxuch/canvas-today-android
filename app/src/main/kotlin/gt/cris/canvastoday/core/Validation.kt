@@ -27,6 +27,17 @@ fun normalizeBaseUrl(input: String): String? {
     return if (valid.matches(host)) "https://$host" else null
 }
 
+/**
+ * Enlace web de Canvas → enlace de la app Canvas Student (`canvas-courses://dominio/ruta`).
+ * La app ya tiene la sesión iniciada; el navegador pediría el inicio de sesión de la universidad.
+ * null si no es un enlace https.
+ */
+fun toCanvasAppUri(url: String): String? {
+    val m = Regex("""^https://([^/?#]+)(.*)$""").find(url.trim()) ?: return null
+    val (host, rest) = m.destructured
+    return "canvas-courses://$host$rest"
+}
+
 /** Los tokens de Canvas tienen la forma "número~letras". */
 fun isTokenFormat(token: String): Boolean = Regex("""^\d+~[A-Za-z0-9]+$""").matches(token.trim())
 

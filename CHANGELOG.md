@@ -5,6 +5,11 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y
 
 ## [Sin publicar]
 
+### Cambiado
+
+- "Abrir en Canvas", el widget y los avisos abren la tarea en la app Canvas Student si está instalada, que
+  ya tiene la sesión iniciada. Sin ella, se usa el navegador como antes.
+
 ## [0.1.0]
 
 ### Agregado

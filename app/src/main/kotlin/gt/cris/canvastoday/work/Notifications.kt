@@ -7,12 +7,12 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import gt.cris.canvastoday.R
+import gt.cris.canvastoday.ui.CanvasLinks
 import gt.cris.canvastoday.ui.MainActivity
 import java.time.Duration
 import java.time.Instant
@@ -48,7 +48,7 @@ object Notifications {
             context.getString(R.string.notify_hours, Math.round(left.seconds / 3600.0).toInt())
         }
         val time = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(due.atZone(ZoneId.systemDefault()))
-        val intent = url?.let { Intent(Intent.ACTION_VIEW, Uri.parse(it)) }
+        val intent = url?.let { CanvasLinks.intentFor(context, it) }
             ?: Intent(context, MainActivity::class.java)
         val pending = PendingIntent.getActivity(
             context,
