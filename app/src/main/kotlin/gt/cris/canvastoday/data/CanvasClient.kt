@@ -37,6 +37,9 @@ class CanvasClient(baseUrl: String, private val token: String) {
         }
         try {
             c.requestMethod = method
+            // Sin redirecciones automáticas: una respuesta 3xx podría llevar el token a otro dominio.
+            // Canvas no redirige la API; si pasa, se trata como error.
+            c.instanceFollowRedirects = false
             c.connectTimeout = TIMEOUT_MS
             c.readTimeout = TIMEOUT_MS
             c.setRequestProperty("Authorization", "Bearer $token")
