@@ -33,12 +33,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -51,6 +53,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -125,6 +128,7 @@ fun ListScreen(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.title_list)) },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background),
                 actions = {
                     IconButton(onClick = onRefresh) {
                         Icon(Icons.Filled.Refresh, stringResource(R.string.action_refresh))
@@ -138,30 +142,44 @@ fun ListScreen(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { showNoteDialog = true },
+                // Botón con el acento sólido (azul en oscuro), como los botones principales de iOS.
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
                 icon = { Icon(Icons.Filled.Add, null) },
                 text = { Text(stringResource(R.string.note_new)) },
             )
         },
         snackbarHost = { SnackbarHost(snackbar) },
         bottomBar = {
-            NavigationBar {
+            // Barra de pestañas al estilo iOS: sin la píldora de Material, la pestaña activa se marca en color.
+            val tabColors = NavigationBarItemDefaults.colors(
+                selectedIconColor = MaterialTheme.colorScheme.primary,
+                selectedTextColor = MaterialTheme.colorScheme.primary,
+                indicatorColor = Color.Transparent,
+                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
                 NavigationBarItem(
                     selected = tab == Tab.HOME,
                     onClick = { tab = Tab.HOME },
                     icon = { Icon(Icons.Filled.Home, null) },
                     label = { Text(stringResource(R.string.tab_home)) },
+                    colors = tabColors,
                 )
                 NavigationBarItem(
                     selected = tab == Tab.TASKS,
                     onClick = { tab = Tab.TASKS },
                     icon = { Icon(Icons.AutoMirrored.Filled.List, null) },
                     label = { Text(stringResource(R.string.tab_tasks, tasks.size)) },
+                    colors = tabColors,
                 )
                 NavigationBarItem(
                     selected = tab == Tab.NOTES,
                     onClick = { tab = Tab.NOTES },
                     icon = { Icon(Icons.Filled.Edit, null) },
                     label = { Text(stringResource(R.string.tab_notes, notes.size)) },
+                    colors = tabColors,
                 )
             }
         },
@@ -413,7 +431,10 @@ private fun ItemCard(
                     }
                     Row {
                         item.url?.let { url ->
-                            TextButton(onClick = { onOpen(url) }) { Text(stringResource(R.string.open_in_canvas)) }
+                            TextButton(
+                                onClick = { onOpen(url) },
+                                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.primary),
+                            ) { Text(stringResource(R.string.open_in_canvas)) }
                         }
                         if (item.isNote) {
                             TextButton(

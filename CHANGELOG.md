@@ -5,6 +5,15 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y
 
 ## [Sin publicar]
 
+## [0.1.1]
+
+### Cambiado
+
+- Modo oscuro con la paleta de iOS: fondo negro, celdas en gris oscuro, texto secundario translúcido y azul de
+  sistema como acento. Antes usaba los colores dinámicos, que en oscuro quedaban grises y sin contraste.
+- Barra de pestañas sin la píldora gris: la pestaña activa se marca en color. Botón "Nota" con el color de
+  acento.
+
 ## [0.1.0]
 
 ### Agregado
