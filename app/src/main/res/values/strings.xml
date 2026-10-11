@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Canvas Today</string>
+
+    <!-- Lista -->
+    <string name="title_list">Pendientes</string>
+    <string name="action_refresh">Actualizar</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="summary_none_today">Nada para hoy</string>
+    <string name="summary_today">%1$d para hoy</string>
+    <string name="summary_total">%1$d en total</string>
+    <string name="summary_overdue">%1$d atrasadas</string>
+    <string name="empty_title">Sin pendientes</string>
+    <string name="empty_body">No hay entregas en los próximos %1$d días.</string>
+    <string name="updated_at">Actualizado %1$s</string>
+    <string name="never_updated">Sin actualizar</string>
+    <string name="group_overdue">Atrasadas</string>
+    <string name="group_today">Hoy</string>
+    <string name="group_tomorrow">Mañana</string>
+    <string name="group_week">Esta semana</string>
+    <string name="group_later">Más adelante</string>
+    <string name="points">%1$s pts</string>
+    <string name="open_in_canvas">Abrir en Canvas</string>
+    <string name="personal_note">Nota personal</string>
+    <string name="default_course">Canvas</string>
+    <string name="untitled">Sin título</string>
+
+    <!-- Tipos -->
+    <string name="type_assignment">Tarea</string>
+    <string name="type_quiz">Examen</string>
+    <string name="type_discussion_topic">Foro</string>
+    <string name="type_wiki_page">Página</string>
+    <string name="type_planner_note">Nota</string>
+    <string name="type_assessment_request">Revisión</string>
+
+    <!-- Fechas relativas -->
+    <string name="due_overdue_today">Venció %1$s</string>
+    <string name="due_yesterday">Ayer</string>
+    <string name="due_days_ago">Hace %1$d d</string>
+    <string name="due_in_minutes">En %1$d min</string>
+    <string name="due_in_hours">En %1$d h</string>
+
+    <!-- Errores -->
+    <string name="error_auth">El token no es válido o ya venció.</string>
+    <string name="error_forbidden">Canvas rechazó el acceso con este token.</string>
+    <string name="error_network">Sin conexión con Canvas.</string>
+    <string name="error_timeout">Canvas tardó demasiado en responder.</string>
+    <string name="error_http">Canvas respondió con un error.</string>
+    <string name="error_not_configured">Falta configurar Canvas.</string>
+
+    <!-- Configuración inicial -->
+    <string name="setup_title">Conectar con Canvas</string>
+    <string name="setup_intro">Canvas Today lee tus pendientes con un token de acceso. El token se guarda cifrado en este teléfono y solo se envía a tu Canvas.</string>
+    <string name="setup_steps">En Canvas, desde el navegador: Cuenta → Configuraciones → + Nuevo token de acceso. Copia el token y pégalo aquí.</string>
+    <string name="setup_domain">Dirección de Canvas</string>
+    <string name="setup_domain_hint">tuescuela.instructure.com</string>
+    <string name="setup_token">Token</string>
+    <string name="setup_token_keep">Deja el token vacío para conservar el actual.</string>
+    <string name="setup_save">Guardar</string>
+    <string name="setup_error_domain">La dirección no es válida.</string>
+    <string name="setup_error_token">El token no tiene el formato de Canvas (número~letras).</string>
+
+    <!-- Notas -->
+    <string name="note_new">Nota</string>
+    <string name="note_dialog_title">Nueva nota</string>
+    <string name="note_title">Título</string>
+    <string name="note_details">Detalles (opcional)</string>
+    <string name="note_date">Fecha</string>
+    <string name="note_time">Hora</string>
+    <string name="note_no_time">Sin hora (11:59 p. m.)</string>
+    <string name="note_course">Curso</string>
+    <string name="note_no_course">Ningún curso</string>
+    <string name="note_save">Guardar</string>
+    <string name="note_cancel">Cancelar</string>
+    <string name="note_delete">Eliminar</string>
+    <string name="note_delete_confirm">¿Eliminar esta nota? También se borra de Canvas.</string>
+    <string name="note_error_title">Escribe un título.</string>
+    <string name="note_error_title_long">El título es demasiado largo.</string>
+    <string name="note_error_details_long">Los detalles son demasiado largos.</string>
+    <string name="note_sync_hint">Se guarda en tu planner de Canvas: también la ves en el escritorio y en la web.</string>
+
+    <!-- Ajustes -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_back">Volver</string>
+    <string name="settings_notify">Avisar antes de vencer</string>
+    <string name="settings_days">Mostrar los próximos</string>
+    <string name="settings_hours_value">%1$d h</string>
+    <string name="settings_days_value">%1$d días</string>
+    <string name="settings_account">Cuenta de Canvas</string>
+    <string name="settings_change">Cambiar dirección o token</string>
+    <string name="settings_logout">Cerrar sesión</string>
+    <string name="settings_battery">Avisos puntuales</string>
+    <string name="settings_battery_body">Si los avisos llegan tarde, excluye Canvas Today del ahorro de batería.</string>
+    <string name="settings_battery_open">Abrir ajustes de batería</string>
+
+    <!-- Avisos -->
+    <string name="channel_due">Vencimientos</string>
+    <string name="channel_due_description">Avisos antes de que venza un pendiente.</string>
+    <string name="notify_due_in">Vence en %1$s · %2$s</string>
+    <string name="notify_minutes">%1$d min</string>
+    <string name="notify_hours">%1$d h</string>
+
+    <!-- Widget -->
+    <string name="widget_label">Pendientes de hoy</string>
+    <string name="widget_description">Lo que vence hoy y mañana en Canvas.</string>
+    <string name="widget_title">Hoy y mañana</string>
+    <string name="widget_empty">Nada pendiente</string>
+    <string name="widget_setup">Abre la app para conectar Canvas</string>
+</resources>

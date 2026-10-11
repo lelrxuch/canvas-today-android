@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lista con marca de verificación, dentro de la zona segura de 66 dp del ícono adaptativo. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,34h36a4,4 0,0 1,4 4v32a4,4 0,0 1,-4 4h-36a4,4 0,0 1,-4 -4v-32a4,4 0,0 1,4 -4z" />
+    <path
+        android:fillColor="#1F6FEB"
+        android:pathData="M41,46h26v4h-26z M41,56h16v4h-16z" />
+    <path
+        android:fillColor="#34C759"
+        android:pathData="M60.6,63.4l3.4,3.4l7.6,-7.6l2.8,2.8l-10.4,10.4l-6.2,-6.2z" />
+</vector>
